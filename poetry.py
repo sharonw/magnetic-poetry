@@ -5,21 +5,26 @@ Inspired by the original magnet sets:
 http://magneticpoetry.com/category/voices-word-magnets/
 """
 
-import re
-SRE_MATCH_TYPE = type(re.match("", ""))
+word_count = dict()
+prepositions = open('prepositions.txt', 'r')
+
+for word in prepositions:
+    word_count[word.strip()] = 0
 
 names = set()
 quotes = open('mean-girls.txt', 'r')
 
-regex = re.compile("^[A-Za-z.' ]*:")
 for line in quotes:
-    m = regex.match(line)
+    colon = line.find(':')
 
-    # If we found a match, m is SRE_Match
-    # Otherwise, if there's no match, it's NoneType
+    if colon != -1:
+        names.add(line[:colon])
 
-    if type(m) is SRE_MATCH_TYPE:
-        name = m.group()
-        names.add(name[:-1])
+        dialogue = line[colon+1:].strip().split()
+        print dialogue
 
+print '\n\nCharacter names:\n'
 print names
+
+print '\n\nOccurrences of prepositions:\n'
+print word_count
